@@ -6,7 +6,7 @@ import arrowLeft from './arrow-left.svg';
 import PT from 'prop-types';
 import CleanButton from '../../CleanButton';
 import withFancyScroll from '../../withFancyScroll';
-import { TimelineLite } from 'gsap';
+import { TimelineMax } from 'gsap';
 import { Power1 } from 'gsap';
 
 const Title = styled.h2`
@@ -108,7 +108,7 @@ class PaintingInfo extends PureComponent {
     const $title = this.titleRef.current;
     const $desc = this.descRef.current;
     const $year = this.yearRef.current;
-    const tl = new TimelineLite();
+    const tl = new TimelineMax();
     const from = {
       opacity: 0,
       x: -50,

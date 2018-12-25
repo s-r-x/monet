@@ -2,14 +2,21 @@ import React, { PureComponent } from 'react'
 import PT from 'prop-types';
 import styled from 'styled-components';
 import { Application, loader, Sprite, filters, WRAP_MODES } from 'pixi.js';
-import { TimelineLite } from 'gsap';
+import { TimelineMax } from 'gsap';
 import { Power2 } from 'gsap';
+const Viewport = require('pixi-viewport');
 
 const PixiLoader = loader.__proto__.constructor;
 
 const filterLoader = new PixiLoader();
 
-const Viewport = require('pixi-viewport');
+// there is no time to explain - 
+// cache all loaded pixi assets here instead of pixi loader
+const assets = {};
+// animation variables
+const time = 1;
+const ease = Power2.easeOut;
+
 
 const Canvas = styled.canvas`
   z-index: 0;
@@ -21,7 +28,7 @@ const Canvas = styled.canvas`
   cursor: grab !important;
 `;
 
-// TODO:: prevent to load other resources while loading
+
 class Painting extends PureComponent {
   constructor() {
     super();
@@ -30,11 +37,12 @@ class Painting extends PureComponent {
     this.viewportEvents = [ 'drag', 'pinch', 'wheel', 'decelerate' ];
     this.activeImage = null;
     this.loader = new PixiLoader();
+
+    this.state = {
+      isLoading: false,
+    }
   }
   async componentDidMount() {
-    if(!window.assets) {
-      window.assets = {};
-    }
     this.$container = document.getElementById('main-container');
     const $canvas = this.canvasRef.current;
     const app = new Application({ 
@@ -43,6 +51,15 @@ class Painting extends PureComponent {
     });
     this.pixi = app;
     await this.loadFilter();
+
+    // timeline for image load animation
+    const tl = new TimelineMax({
+      paused: true,
+      repeat: -1,
+    });
+    const filter = this.displacementFilter;
+    this.loadingTl = tl;
+    tl.to(filter.scale, 70, { x: 3000, y: 600, ease: 'linear'})
     this.initViewport();
     app.stage.addChild(this.viewport);
     this.pauseEvents();
@@ -88,8 +105,9 @@ class Painting extends PureComponent {
   resumeEvents() {
     this.viewportEvents.forEach(event => this.viewport.resumePlugin(event));
   }
-  componentDidUpdate(prevProps) { 
+  componentDidUpdate(prevProps, prevState) { 
     const { mode } = this.props;
+    const { isLoading } = this.state;
     if(prevProps.mode !== mode) {
       // leaving...
       if(prevProps.mode === 'painting') {
@@ -104,6 +122,15 @@ class Painting extends PureComponent {
     if(prevProps.url !== this.props.url) {
       this.changeImage();
     }
+    if(prevState.isLoading !== isLoading) {
+      if(isLoading) {
+        this.loadingTl.play();
+      }
+      else {
+        this.loadingTl.seek(0);
+        this.loadingTl.pause();
+      }
+    }
   }
   // pixi loader is such a pain in the ass
   // need to create new loader instance everytime
@@ -112,11 +139,12 @@ class Painting extends PureComponent {
   changeImage() {
     const { url } = this.props;
     const onload = () => {
+      this.setState({ isLoading: false });
       const { viewport } = this;
-      if(!window.assets[url] && this.loader.resources[url]) {
-        window.assets[url] = this.loader.resources[url];
+      if(!assets[url] && this.loader.resources[url]) {
+        assets[url] = this.loader.resources[url];
       }
-      const texture = window.assets[url].texture;
+      const texture = assets[url].texture;
       this.paintingTexture = texture;
       const sprite = new Sprite(texture);
       this.paintingSprite = sprite;
@@ -124,9 +152,7 @@ class Painting extends PureComponent {
       sprite.alpha = 0;
       viewport.addChild(sprite);
       const { activeImage } = this;
-      const tl = new TimelineLite();
-      const time = 1;
-      const ease = Power2.easeOut;
+      const tl = new TimelineMax();
       this.resize();
       if(!activeImage) {
         tl.to(sprite, time, { alpha: 1 });  
@@ -140,13 +166,14 @@ class Painting extends PureComponent {
       this.activeImage = sprite;
       this.loader = new PixiLoader();
     };
-    if(url in window.assets) {
+    if(url in assets) {
       return onload();
     }
     else {
       if(this.loader.loading) {
         this.loader.reset();
       }
+      this.setState({ isLoading: true });
       this.loader = new PixiLoader();
       this.loader.add(url, url);
       this.loader.load(onload);

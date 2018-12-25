@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap-grid.css';
 import 'reset-css/reset.css';
 
 import './closestPolyfill';
+import 'promise-polyfill/src/polyfill';
+
 import React, { Component } from 'react';
 import theme from './theme';
 import { ThemeProvider } from 'styled-components';
