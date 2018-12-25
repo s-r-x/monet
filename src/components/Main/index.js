@@ -76,20 +76,19 @@ export default class Bio extends PureComponent {
             mode={mode}
             url={window.paintingsBaseUrl + activePainting.file}/>
         }
+        {mode === 'painting' && <TopButtons changeMode={this.changeViewMode}/>}
         <EnhancedOverlay mode={mode}/>
-        <TopButtons 
-          changeViewMode={this.changeViewMode}
-          mode={mode}>
-        </TopButtons>
         <TransitionPaintingInfo
           paintingIndex={activePaintingIndex}
           changeActivePaintingIndex={this.changeActivePaintingIndex} 
           paintingsLength={paintings.length}
+          changeMode={this.changeViewMode}
           painting={activePainting}
           show={mode === 'painting-info'}/>
         <TransitionBioDetails
           activePeriodIndex={activePeriodIndex}
           show={mode === 'bio'}
+          changeMode={this.changeViewMode}
           changeActivePaintingIndex={this.changeActivePaintingIndex}
           bio={bioDict[activePeriodIndex]}
           paintings={paintings}

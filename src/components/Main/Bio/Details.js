@@ -13,15 +13,21 @@ const Wrap = styled.div`
   display: flex; 
   flex-direction: column; 
   padding-top: 100px;
+  @media(max-width: ${({theme}) => theme.breakpoints.xs}px) {
+    padding-top: 50px;
+  }
 `;
 
 export default class BioDetails extends PureComponent {
   render() {
-    const { paintings, changeActivePaintingIndex, bio, activePeriodIndex } = this.props;
+    const { paintings, changeActivePaintingIndex, changeMode, bio, activePeriodIndex } = this.props;
     const { content, years } = bio;
     return (
       <Wrap>
-        <Paintings paintings={paintings} changeActivePaintingIndex={changeActivePaintingIndex}/>
+        <Paintings paintings={paintings} changeActivePaintingIndex={(index) => {
+          changeActivePaintingIndex(index);
+          changeMode('painting');
+        }}/>
         <Row style={{marginTop: '7vh', marginBottom: '15px'}}>
           <Col 
             xl={{offset: 4, size: 8}} 

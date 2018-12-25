@@ -5,6 +5,7 @@ import Head from './Head/index';
 import Container from './Container';
 import withTransition from './withRouteTransition';
 import zip from 'lodash.zip';
+import Menu from './Menu';
 
 const routes = zip([
   '/head', '/youth', '/begin', '/impr', '/giverny'
@@ -17,6 +18,7 @@ const WrappedContainer = withRouter(Container);
 const Router = () => (
   <BrowserRouter basename={process.env.PUBLIC_URL}>
     <WrappedContainer>
+        <Menu/>
         <Route exact path="/" render={() => <Redirect to="/head"/>}/>
         {routes.map(([ route, component ]) => {
           const Transitioned = withTransition(() => component);

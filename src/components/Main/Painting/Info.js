@@ -30,15 +30,22 @@ const Title = styled.h2`
     line-height: 55px;
   }
   @media(max-width: ${({theme}) => theme.breakpoints.xs}px) {
-    max-width: 90%;
+    max-width: 100%;
     font-size: 42px;
     line-height: 40px;
+  }
+  @media(max-width: 340px) {
+    font-size: 32px;
+    line-height: 35px;
   }
 `;
 const Year = styled.span`
   display: block;
   font-size: 24px;
   font-style: italic;
+  @media(max-width: 340px) {
+    font-size: 22px;
+  }
 `;
 const Desc = withFancyScroll(styled.p`
   line-height: 30px;
@@ -48,7 +55,7 @@ const Desc = withFancyScroll(styled.p`
   max-height: 20vh;
   overflow: auto;
   margin-top: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   @media(max-width: ${({theme}) => theme.breakpoints.lg}px) {
     max-width: 60%;
   }
@@ -83,8 +90,19 @@ const CurrentIndex = styled.span`
   font-style: italic;
 `;
 
-const NavButtons = styled.div`
-  @media(max-width: ${({theme}) => theme.breakpoints.xs}px) {
+const NavButtons = styled.div``;
+
+const NavButtons2 = styled.div`
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  button {
+    font-size: 16px;
+    transition: opacity .35s ease-out;
+    :hover {
+      opacity: 0.6;
+    }
   }
 `;
 
@@ -126,7 +144,7 @@ class PaintingInfo extends PureComponent {
 
   }
   render() {
-    const { painting, paintingIndex, changeActivePaintingIndex, paintingsLength } = this.props;
+    const { painting, paintingIndex, changeActivePaintingIndex, paintingsLength, changeMode } = this.props;
     return (
       <EnhancedRow>
         <Col xs={{offset: 1, size: 11}}>
@@ -158,6 +176,10 @@ class PaintingInfo extends PureComponent {
                 </CleanButton>
             }
           </NavButtons>
+          <NavButtons2>
+            <CleanButton onClick={() => changeMode('painting')}>Посмотреть картину</CleanButton>
+            <CleanButton onClick={() => changeMode('bio')}>К биографии</CleanButton>
+          </NavButtons2>
         </Col>
       </EnhancedRow>
 
@@ -167,6 +189,7 @@ class PaintingInfo extends PureComponent {
 PaintingInfo.propTypes = {
   painting: PT.object,
   changeActivePaintingIndex: PT.func,
+  chageMode: PT.func,
   paintingsLength: PT.number,
   paintingIndex: PT.number,
 };

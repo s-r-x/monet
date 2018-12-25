@@ -1,6 +1,7 @@
 // css
 import 'bootstrap/dist/css/bootstrap-grid.css';
 import 'reset-css/reset.css';
+import './App.css';
 
 import './closestPolyfill';
 import 'promise-polyfill/src/polyfill';
