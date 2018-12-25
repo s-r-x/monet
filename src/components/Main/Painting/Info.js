@@ -48,6 +48,7 @@ const Year = styled.span`
   }
 `;
 const Desc = withFancyScroll(styled.p`
+  font-size: 17px;
   line-height: 30px;
   font-style: italic;
   max-width: 50%;

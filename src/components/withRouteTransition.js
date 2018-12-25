@@ -10,10 +10,10 @@ export default (Component) => {
       exit
       unmountOnExit
       in={props.show}
-      timeout={1000}
+      timeout={1250}
       onEnter={node => TweenLite.set(node, startState)}
       addEndListener={ (node, done) => {
-        TweenLite.to(node, 1, {
+        TweenLite.to(node, 1.25, {
           autoAlpha: props.show ? 1 : 0,
           onComplete: done
         });

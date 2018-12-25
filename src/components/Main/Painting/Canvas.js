@@ -159,8 +159,8 @@ class Painting extends PureComponent {
       }
       else {
         tl.to(activeImage, time, { alpha: 0, ease })
-          .to(filter.scale, time / 2, { x: 800, y: 500, ease }, 0)
-          .to(filter.scale, time / 2, { x: 0, y: 0, ease }, time / 2)
+          .to(filter.scale, time / 2, { x: 600, y: 400, ease: 'linear' }, 0)
+          .to(filter.scale, time / 2, { x: 0, y: 0, ease: 'linear' }, time / 2)
           .to(sprite, time, { alpha: 1, ease }, 0);
       }
       this.activeImage = sprite;

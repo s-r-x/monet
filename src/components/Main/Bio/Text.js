@@ -4,6 +4,7 @@ import PT from 'prop-types';
 import withFancyScroll from '../../withFancyScroll';
 
 const Paragraph = withFancyScroll(styled.p`
+  font-size: 17px;
   min-height: 1px;
   max-height: 100%;
   padding-right: 30px;
