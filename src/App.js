@@ -9,10 +9,6 @@ import './closestPolyfill';
 import CSSPlugin from 'gsap/CSSPlugin';
 const plugins = [ CSSPlugin ];
 
-//import 'promise-polyfill/src/polyfill';
-
-
-
 class App extends Component {
   render() {
     return (

@@ -1,4 +1,6 @@
 import './setGlobalPaths';
+import "core-js/fn/symbol/iterator.js";
+import 'react-app-polyfill/ie11';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
