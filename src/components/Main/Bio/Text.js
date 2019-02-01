@@ -11,6 +11,7 @@ const Paragraph = withFancyScroll(styled.p`
   font-style: italic; 
   line-height: 30px;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   @media(max-width: ${({theme}) => theme.breakpoints.sm}px) {
     padding-right: 5px;
   }

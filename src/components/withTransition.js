@@ -1,6 +1,7 @@
 import { Transition } from "react-transition-group";
 import TweenLite from 'gsap/TweenLite'
-import { Power1 } from 'gsap';
+import { Power1 } from 'gsap/EasePack'; 
+
 import React from 'react';
 
 export default (Component) => {

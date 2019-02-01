@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react'
+import TimelineLite from 'gsap/TimelineLite';                                                                                                                          
+import { Power2 } from 'gsap/EasePack';
 import PT from 'prop-types';
 import styled from 'styled-components';
 import { Application, loader, Sprite, filters, WRAP_MODES } from 'pixi.js';
-import { TimelineMax } from 'gsap';
-import { Power2 } from 'gsap';
 const Viewport = require('pixi-viewport');
 
 const PixiLoader = loader.__proto__.constructor;
@@ -53,11 +53,10 @@ class Painting extends PureComponent {
     await this.loadFilter();
 
     // timeline for image load animation
-    const tl = new TimelineMax({
-      paused: true,
-      repeat: -1,
-    });
+    const tl = new TimelineLite();
+    tl.pause();
     const filter = this.displacementFilter;
+    filter.padding = 0;
     this.loadingTl = tl;
     tl.to(filter.scale, 70, { x: 3000, y: 600, ease: 'linear'})
     this.initViewport();
@@ -152,7 +151,7 @@ class Painting extends PureComponent {
       sprite.alpha = 0;
       viewport.addChild(sprite);
       const { activeImage } = this;
-      const tl = new TimelineMax();
+      const tl = new TimelineLite();
       this.resize();
       if(!activeImage) {
         tl.to(sprite, time, { alpha: 1 });  

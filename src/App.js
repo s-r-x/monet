@@ -1,15 +1,16 @@
-// css
-import 'bootstrap/dist/css/bootstrap-grid.css';
-import 'reset-css/reset.css';
-import './App.css';
-
-import './closestPolyfill';
-import 'promise-polyfill/src/polyfill';
-
 import React, { Component } from 'react';
 import theme from './theme';
 import { ThemeProvider } from 'styled-components';
 import Router from './components/Router';
+import 'bootstrap/dist/css/bootstrap-grid.css';
+import 'reset-css/reset.css';
+import './App.css';
+import './closestPolyfill';
+import CSSPlugin from 'gsap/CSSPlugin';
+const plugins = [ CSSPlugin ];
+
+//import 'promise-polyfill/src/polyfill';
+
 
 
 class App extends Component {

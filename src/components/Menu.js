@@ -3,7 +3,7 @@ import 'hamburgers/dist/hamburgers.css';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import TweenLite from 'gsap/TweenLite'
-import { Power1 } from 'gsap';
+import { Power1 } from 'gsap/EasePack'; 
 
 const Wrap = styled.nav`
     position: absolute;

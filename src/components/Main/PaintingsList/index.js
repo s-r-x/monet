@@ -12,6 +12,7 @@ const Wrap = withFancyScroll(styled.div`
   white-space: nowrap;
   overflow-y: hidden;
   min-height: 183px;
+  -webkit-overflow-scrolling: touch;
   @media(max-width: ${({theme}) => theme.breakpoints.sm}px) {
     min-height: 100px;
   }

@@ -15,7 +15,7 @@ const Hero = styled.header`
 const H1 = styled.h1`
   margin-bottom: 4px;
   font-size: 94px;
-  line-height: 88px;
+  line-height: 80px;
   font-weight: 900;
   @media(max-width: ${({theme}) => theme.breakpoints.md}px) {
     font-size: 72px;
@@ -29,7 +29,6 @@ const H1 = styled.h1`
 const Years = styled.span`
   line-height: 17px;
   font-size: ${({theme}) => theme.baseFontsize}px;
-  letter-spacing: 0.1em;
 `;
 
 const Head = styled(Section)`
@@ -63,30 +62,9 @@ const LightenOverlay = styled(Overlay)`
 `;
 
 export default class H extends PureComponent {
-    constructor() {
-      super();
-      this.wheelHandler = this.wheelHandler.bind(this);
-      this.keyHandler = this.keyHandler.bind(this);
-    }
-    componentDidMount() {
-      window.addEventListener('wheel', this.wheelHandler);
-      window.addEventListener('keyup', this.keyHandler);
-    }
-    keyHandler({ keyCode }) {
-      if(keyCode === 40) {
-        this.props.history.push('/youth');
-      }
-    }
-    wheelHandler(e) {
-      var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-      if(delta === -1) {
-        this.props.history.push('/youth');
-      }
-    }
-    componentWillUnmount() {
-      window.removeEventListener('wheel', this.wheelHandler);
-      window.removeEventListener('keyup', this.keyHandler);
-    }
+  constructor() {
+    super();
+  }
   render() {
     return (
       <Head>

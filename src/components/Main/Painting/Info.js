@@ -6,8 +6,9 @@ import arrowLeft from './arrow-left.svg';
 import PT from 'prop-types';
 import CleanButton from '../../CleanButton';
 import withFancyScroll from '../../withFancyScroll';
-import { TimelineMax } from 'gsap';
-import { Power1 } from 'gsap';
+import TimelineLite from 'gsap/TimelineLite';                                                                                                                          
+import { Power1 } from 'gsap/EasePack'; 
+
 
 const Title = styled.h2`
   font-size: 94px;
@@ -55,6 +56,7 @@ const Desc = withFancyScroll(styled.p`
   padding-right: 5px;
   max-height: 20vh;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   margin-top: 20px;
   margin-bottom: 30px;
   @media(max-width: ${({theme}) => theme.breakpoints.lg}px) {
@@ -127,7 +129,7 @@ class PaintingInfo extends PureComponent {
     const $title = this.titleRef.current;
     const $desc = this.descRef.current;
     const $year = this.yearRef.current;
-    const tl = new TimelineMax();
+    const tl = new TimelineLite();
     const from = {
       opacity: 0,
       x: -50,
